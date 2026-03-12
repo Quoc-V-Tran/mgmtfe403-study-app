@@ -235,7 +235,7 @@ def render_lifo_fifo(data, key_prefix="lifo_fifo"):
                 data["lifo_reserve_prior"],
             ],
         },
-        use_container_width=True,
+        width="stretch",
         hide_index=True,
     )
     c1, c2 = st.columns(2)
@@ -289,7 +289,7 @@ def render_ppe_question(data, key_prefix="ppe"):
     st.write(data["prompt"])
     st.dataframe(
         {"Metric": list(data["data"].keys()), "Value": list(data["data"].values())},
-        use_container_width=True,
+        width="stretch",
         hide_index=True,
     )
     c1, c2 = st.columns(2)
