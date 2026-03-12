@@ -9,49 +9,40 @@ EFFECT_OPTIONS = ["Select", "Increase", "Decrease", "No effect"]
 BOND_OPTIONS = ["Select", "Increase", "Decrease", "Insufficient information"]
 PPE_RISK_OPTIONS = ["Select", "Higher credit risk", "Lower credit risk", "No change"]
 
-# Readable labels for FSET fields (short key -> display label)
+# Readable labels for FSET fields (short key -> display label); Part I = numerator/denominator inputs + CFO only
 FSET_LABELS = {
     "ca": "Current assets (CA)",
     "cl": "Current liabilities (CL)",
-    "cr": "Current ratio, CR (CA ÷ CL)",
     "d": "Debt (D)",
     "e": "Equity (E)",
-    "de": "Debt-to-equity (D ÷ E)",
     "ni": "Net income (NI)",
     "avg_a": "Average assets (Avg A)",
-    "roa": "ROA (NI ÷ Avg A)",
     "cfo": "Cash flow from operations (CFO)",
 }
 
 
-# Part I compact column labels and field keys (order: CA, CL, CR, D, E, D/E, NI, Avg A, ROA, CFO)
-FSET_COL_LABELS = ["CA", "CL", "CR", "D", "E", "D/E", "NI", "Avg A", "ROA", "CFO"]
-FSET_KEYS = ["ca", "cl", "cr", "d", "e", "de", "ni", "avg_a", "roa", "cfo"]
+# Part I: components of CR, D/E, ROA plus CFO (order: CA, CL, D, E, NI, Avg A, CFO)
+FSET_COL_LABELS = ["CA", "CL", "D", "E", "NI", "Avg A", "CFO"]
+FSET_KEYS = ["ca", "cl", "d", "e", "ni", "avg_a", "cfo"]
 
 
 def render_part_i_question(question, key_prefix="part_i"):
     st.markdown("**Part I — Financial Statement Effects of Transactions (FSET)**")
     st.markdown(
-        "For each event, determine the effect on the relevant inputs first, then determine the resulting ratio.\n\n"
-        "For each ratio set:\n"
-        "- Choose the effect on the numerator\n"
-        "- Choose the effect on the denominator\n"
-        "- Then choose the effect on the overall ratio\n\n"
-        "Use:\n"
-        "- ↑ = increase\n"
-        "- ↓ = decrease\n"
-        "- = = no effect\n\n"
-        "You will answer for:\n"
-        "- Current Ratio (CR = CA ÷ CL)\n"
-        "- Debt-to-Equity (D/E = D ÷ E)\n"
-        "- Return on Assets (ROA = NI ÷ Avg A)\n"
-        "- Cash Flow from Operations (CFO)"
+        "For each event, show the effect on CFO and the numerator/denominator of CR, D/E, and ROA at year-end. "
+        "Use ↑, ↓, or =.\n\n"
+        "You are answering for the **inputs only** (not the overall ratios):\n"
+        "- **CR:** numerator CA, denominator CL\n"
+        "- **D/E:** numerator D, denominator E\n"
+        "- **ROA:** numerator NI, denominator Avg A\n"
+        "- **CFO:** cash flow from operations\n\n"
+        "Use: ↑ = increase · ↓ = decrease · = = no effect"
     )
     st.markdown("---")
     st.markdown(f"**Event {question['id']}**")
     st.write(question["event"])
 
-    cols = st.columns(10)
+    cols = st.columns(7)
     values = []
     for i, col in enumerate(cols):
         with col:
@@ -64,11 +55,11 @@ def render_part_i_question(question, key_prefix="part_i"):
                     label_visibility="collapsed",
                 )
             )
-    ca, cl, cr, d, e, de, ni, avg_a, roa, cfo = values
+    ca, cl, d, e, ni, avg_a, cfo = values
 
     st.caption(
-        "CA = Current assets · CL = Current liabilities · CR = Current ratio · D = Debt · E = Equity · "
-        "NI = Net income · Avg A = Average assets · ROA = Return on assets · CFO = Cash flow from operations"
+        "CA = Current assets · CL = Current liabilities · D = Debt · E = Equity · "
+        "NI = Net income · Avg A = Average assets · CFO = Cash flow from operations"
     )
 
     feedback_key = f"{key_prefix}_feedback"
@@ -78,7 +69,7 @@ def render_part_i_question(question, key_prefix="part_i"):
         correct = stored["correct"]
         st.markdown("---")
         st.markdown("**Results**")
-        result_cols = st.columns(10)
+        result_cols = st.columns(7)
         for i, field in enumerate(FSET_KEYS):
             user_val = user_answers[field]
             corr_val = correct[field]
@@ -95,16 +86,14 @@ def render_part_i_question(question, key_prefix="part_i"):
 
     if st.button("Check Answer", key=f"{key_prefix}_check"):
         user_answers = {
-            "ca": ca, "cl": cl, "cr": cr,
-            "d": d, "e": e, "de": de,
-            "ni": ni, "avg_a": avg_a, "roa": roa,
-            "cfo": cfo,
+            "ca": ca, "cl": cl, "d": d, "e": e,
+            "ni": ni, "avg_a": avg_a, "cfo": cfo,
         }
         correct = question["answers"]
         all_correct = True
         st.markdown("---")
         st.markdown("**Results**")
-        result_cols = st.columns(10)
+        result_cols = st.columns(7)
         for i, field in enumerate(FSET_KEYS):
             user_val = user_answers[field]
             corr_val = correct[field]
