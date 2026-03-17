@@ -64,7 +64,7 @@ def render_part_i_question(question, key_prefix="part_i"):
 
     feedback_key = f"{key_prefix}_feedback"
     stored = st.session_state.get(feedback_key)
-    if stored is not None:
+    if stored is not None and stored.get("all_correct") is True:
         user_answers = stored["user_answers"]
         correct = stored["correct"]
         st.markdown("---")
@@ -82,7 +82,27 @@ def render_part_i_question(question, key_prefix="part_i"):
                     st.error(f"✗ yours {display_you} → correct {corr_val}")
         with st.expander("Explanation"):
             st.write(question["explanation"])
-        return False
+        return True
+
+    if stored is not None and stored.get("all_correct") is False:
+        user_answers = stored["user_answers"]
+        correct = stored["correct"]
+        st.markdown("---")
+        st.markdown("**Results**")
+        result_cols = st.columns(7)
+        for i, field in enumerate(FSET_KEYS):
+            user_val = user_answers[field]
+            corr_val = correct[field]
+            is_correct = user_val == corr_val
+            with result_cols[i]:
+                if is_correct:
+                    st.success(f"✓ {user_val}")
+                else:
+                    display_you = user_val if user_val != "Select" else "—"
+                    st.error(f"✗ yours {display_you} → correct {corr_val}")
+        with st.expander("Explanation"):
+            st.write(question["explanation"])
+        st.caption("Change your answers above and click **Check Answer** to try again.")
 
     if st.button("Check Answer", key=f"{key_prefix}_check"):
         user_answers = {
@@ -108,7 +128,11 @@ def render_part_i_question(question, key_prefix="part_i"):
                     st.error(f"✗ yours {display_you} → correct {corr_val}")
         with st.expander("Explanation"):
             st.write(question["explanation"])
-        st.session_state[feedback_key] = {"user_answers": user_answers, "correct": correct}
+        st.session_state[feedback_key] = {
+            "user_answers": user_answers,
+            "correct": correct,
+            "all_correct": all_correct,
+        }
         return all_correct
     return False
 

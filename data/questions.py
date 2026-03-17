@@ -85,6 +85,81 @@ PART_I_QUESTIONS = [
     },
 ]
 
+BONUS_FSET_QUESTIONS = [
+    {
+        "id": 1,
+        "event": "Bought $80k equipment for cash",
+        "answers": {"ca": "↓", "cl": "=", "d": "=", "e": "=", "ni": "=", "avg_a": "=", "cfo": "="},
+        "explanation": "Debit PP&E (noncurrent asset) | Credit Cash (current assets decrease). No effect on liabilities, equity, or net income. Cash outflow is investing, so CFO has no effect.",
+    },
+    {
+        "id": 2,
+        "event": "Recognized $12k of accrued wages that will be paid next month",
+        "answers": {"ca": "=", "cl": "↑", "d": "↑", "e": "↓", "ni": "↓", "avg_a": "=", "cfo": "="},
+        "explanation": "Debit Wage Expense (NI and equity decrease) | Credit Wages Payable (current liabilities increase). No cash flow until paid.",
+    },
+    {
+        "id": 3,
+        "event": "Recognized $12k of accrued wages that will be paid now",
+        "answers": {"ca": "↓", "cl": "=", "d": "=", "e": "↓", "ni": "↓", "avg_a": "↓", "cfo": "↓"},
+        "explanation": "Debit Wage Expense (NI and equity decrease) | Credit Cash (CA and avg assets decrease). Cash paid is operating outflow, so CFO decreases.",
+    },
+    {
+        "id": 4,
+        "event": "Paid $1k for prepaid rent",
+        "answers": {"ca": "=", "cl": "=", "d": "=", "e": "=", "ni": "=", "avg_a": "=", "cfo": "↓"},
+        "explanation": "Debit Prepaid Rent (one current asset) | Credit Cash (another current asset). Net CA unchanged; cash outflow is operating, so CFO decreases.",
+    },
+    {
+        "id": 5,
+        "event": "Paid the $12k in wages from Question #2",
+        "answers": {"ca": "↓", "cl": "↓", "d": "=", "e": "=", "ni": "=", "avg_a": "=", "cfo": "↓"},
+        "explanation": "Debit Wages Payable (CL decrease) | Credit Cash (CA decrease). No income effect; cash outflow is operating, so CFO decreases.",
+    },
+    {
+        "id": 6,
+        "event": "Collected $25k in cash from a customer for work to be done in 3 years",
+        "answers": {"ca": "↑", "cl": "=", "d": "↑", "e": "=", "ni": "=", "avg_a": "=", "cfo": "↑"},
+        "explanation": "Debit Cash (CA increase) | Credit Unearned Revenue (long-term liability, so D increases). Cash received is operating inflow, so CFO increases.",
+    },
+    {
+        "id": 7,
+        "event": "In the year we are to complete the work from Question #6, move the liability to current",
+        "answers": {"ca": "=", "cl": "↓", "d": "=", "e": "=", "ni": "=", "avg_a": "=", "cfo": "="},
+        "explanation": "Reclassify Unearned Revenue from long-term to current. Total liabilities unchanged; no cash or income effect.",
+    },
+    {
+        "id": 8,
+        "event": "Record the sale for the job for the customer from Question #6",
+        "answers": {"ca": "=", "cl": "↓", "d": "↓", "e": "↑", "ni": "↑", "avg_a": "=", "cfo": "="},
+        "explanation": "Debit Unearned Revenue (CL and D decrease) | Credit Revenue (NI and equity increase). No cash; revenue recognition only.",
+    },
+    {
+        "id": 9,
+        "event": "Record the cost of goods sold for the job for the customer in Question #6",
+        "answers": {"ca": "↓", "cl": "=", "d": "=", "e": "↓", "ni": "↓", "avg_a": "↓", "cfo": "="},
+        "explanation": "Debit COGS (NI and equity decrease) | Credit Inventory (CA and avg assets decrease). No cash flow; COGS is non-cash.",
+    },
+    {
+        "id": 10,
+        "event": "Issued $200K of 5% bonds at par value on Dec 31, 2026 due in 5 years, paid annually",
+        "answers": {"ca": "↑", "cl": "=", "d": "↑", "e": "=", "ni": "=", "avg_a": "↑", "cfo": "="},
+        "explanation": "Debit Cash (CA and avg assets increase) | Credit Bonds Payable (D increase). Financing inflow; no effect on CFO.",
+    },
+    {
+        "id": 11,
+        "event": "Recognized and paid interest on the bond from Question #10 on Dec 31, 2027",
+        "answers": {"ca": "↓", "cl": "=", "d": "=", "e": "↓", "ni": "↓", "avg_a": "↓", "cfo": "↓"},
+        "explanation": "Debit Interest Expense (NI and equity decrease) | Credit Cash (CA and avg assets decrease). Interest paid is operating outflow, so CFO decreases.",
+    },
+    {
+        "id": 12,
+        "event": "Sold $40K of inventory for $60K. We estimate that 5% of these sales will be returned via warranty",
+        "answers": {"ca": "↑", "cl": "↑", "d": "↑", "e": "↑", "ni": "↑", "avg_a": "↑", "cfo": "↑"},
+        "explanation": "Sale increases receivables/cash, revenue (and COGS reduces inventory); warranty accrual adds estimated liability and expense. Per the key, net effect on components and CFO is increase.",
+    },
+]
+
 PART_II_Q1 = [
     {
         "question": "Treasury stock is reissued at a price above its historical repurchase cost.",
